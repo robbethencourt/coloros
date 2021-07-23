@@ -1,0 +1,45 @@
+{
+  "name": "coloros",
+  "version": "1.0.0",
+  "description": "Elm puzzle game to discover basic color combinations",
+  "main": "index.js",
+  "scripts": {
+    "test": "elm-test",
+    "dev": "webpack serve --mode development",
+    "build": "webpack --mode production",
+    "analyse": "elm-analyse -s -p 3001 -o"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/robbethencourt/coloros.git"
+  },
+  "author": "rob bethencourt",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/robbethencourt/coloros/issues"
+  },
+  "homepage": "https://github.com/robbethencourt/coloros#readme",
+  "devDependencies": {
+    "@babel/core": "^7.14.3",
+    "@babel/preset-env": "^7.14.4",
+    "babel-loader": "^8.2.2",
+    "copy-webpack-plugin": "^9.0.0",
+    "css-loader": "^5.2.6",
+    "elm": "^0.19.1-5",
+    "elm-analyse": "^0.16.5",
+    "elm-format": "^0.8.5",
+    "elm-hot-webpack-loader": "^1.1.8",
+    "elm-test": "^0.19.1-revision7",
+    "elm-webpack-loader": "^7.0.1",
+    "file-loader": "^6.2.0",
+    "html-webpack-plugin": "^5.3.1",
+    "mini-css-extract-plugin": "^1.6.0",
+    "resolve-url-loader": "^4.0.0",
+    "style-loader": "^2.0.0",
+    "url-loader": "^4.1.1",
+    "webpack": "^5.38.1",
+    "webpack-cli": "^4.7.0",
+    "webpack-dev-server": "^3.11.2",
+    "webpack-merge": "^5.7.3"
+  }
+}
