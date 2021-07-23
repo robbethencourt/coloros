@@ -68,6 +68,7 @@ type Msg
     | SelectLevel
     | SelectColorSwatch Level.Color Level.Level
     | MixColors Int Level.Color Level.Level
+    | ResetLevel Int
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -110,11 +111,40 @@ update msg model =
                         |> Level.updateBrushColor level
                         |> Level.updateArtboards newColor artboardNumber
             in
-            -- check if artboards match level
-            -- if they do update gameoutcome to Win, update state with next level so it displays to screen, reset color swatch to initcolorswatch
-            -- else set to Currentlyplaying
-            -- update highest level in model and localstorage
-            ( { model | gameState = Playing updatedLevel CurrentlyPlaying }, Cmd.none )
+            if updatedLevel.colorsToMatch == updatedLevel.artboards then
+                let
+                    newLevel =
+                        Level.allLevels
+                            |> List.filter (\a -> a.levelNumber == level.levelNumber + 1)
+                            |> List.head
+                            |> Maybe.withDefault Level.defaultLevel
+                in
+                ( { model
+                    | colorSwatches = Level.initColorSwatch
+                    , gameState = Playing newLevel CurrentlyPlaying
+                  }
+                , Cmd.none
+                )
+                -- if they do update gameoutcome to Win, disable the buttons
+                -- update highest level in model and localstorage
+
+            else
+                ( { model | gameState = Playing updatedLevel CurrentlyPlaying }, Cmd.none )
+
+        ResetLevel levelNumber ->
+            let
+                resetLevel =
+                    Level.allLevels
+                        |> List.filter (\a -> a.levelNumber == levelNumber)
+                        |> List.head
+                        |> Maybe.withDefault Level.defaultLevel
+            in
+            ( { model
+                | colorSwatches = Level.initColorSwatch
+                , gameState = Playing resetLevel CurrentlyPlaying
+              }
+            , Cmd.none
+            )
 
 
 
@@ -232,7 +262,9 @@ playingView level levelOutcome colorSwatches =
                 ]
             ]
         , section [ class "current-color" ]
-            [ div [] [ text <| Level.colorToString level.brushColor ] ]
+            [ div [] [ text <| Level.colorToString level.brushColor ]
+            , div [] [ button [ onClick <| ResetLevel level.levelNumber ] [ text "reset" ] ]
+            ]
         ]
 
 

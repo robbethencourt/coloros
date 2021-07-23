@@ -3,6 +3,7 @@ module Level exposing
     , Level
     , allLevels
     , colorToString
+    , defaultLevel
     , initColorSwatch
     , mixColors
     , stringToColor
@@ -41,6 +42,11 @@ allLevels =
     , Level 16 ( Purple, Green, BluePurple ) ( NoColor, NoColor, NoColor ) NoColor
     , Level 17 ( YellowOrange, RedPurple, Purple ) ( NoColor, NoColor, NoColor ) NoColor
     ]
+
+
+defaultLevel : Level
+defaultLevel =
+    Level 1 ( Red, Yellow, Blue ) ( NoColor, NoColor, NoColor ) NoColor
 
 
 type Color
