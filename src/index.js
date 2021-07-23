@@ -15,8 +15,17 @@ app.ports.sendMessage.subscribe(function(msg) {
   var jsMsg = msg.jsMsg;
   switch (jsMsg) {
     case "getHighestLevel":
-      app.ports.messageReceiver.send(1);
+      var highestLevel = localStorage.getItem("highestLevel");
+      if (highestLevel === null) {
+        localStorage.setItem("highestLevel", "1");
+        app.ports.messageReceiver.send(1);
+      } else {
+        var highestLevelInt = parseInt(highestLevel, 10);
+        app.ports.messageReceiver.send(highestLevelInt);
+      }
       break;
+    case "setHighestLevel":
+        localStorage.setItem("highestLevel", msg.value);
     default:
       break;
   }

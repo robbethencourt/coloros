@@ -69,6 +69,7 @@ type Msg
     | SelectColorSwatch Level.Color Level.Level
     | MixColors Int Level.Color Level.Level
     | ResetLevel Int
+    | ViewCredits
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -83,7 +84,12 @@ update msg model =
             ( model, sendMessage <| encodeJSMsg jsMsg newLevel )
 
         RecvFromJs highestLevel ->
-            ( { model | highestLevel = highestLevel, gameState = LevelSelect }, Cmd.none )
+            ( { model
+                | highestLevel = highestLevel
+                , gameState = LevelSelect
+              }
+            , Cmd.none
+            )
 
         PlayLevel level ->
             ( { model | gameState = Playing level CurrentlyPlaying }, Cmd.none )
@@ -121,9 +127,10 @@ update msg model =
                 in
                 ( { model
                     | colorSwatches = Level.initColorSwatch
+                    , highestLevel = level.levelNumber + 1
                     , gameState = Playing newLevel CurrentlyPlaying
                   }
-                , Cmd.none
+                , sendMessage <| encodeJSMsg SetHighestLevel (level.levelNumber + 1)
                 )
                 -- if they do update gameoutcome to Win, disable the buttons
                 -- update highest level in model and localstorage
@@ -145,6 +152,9 @@ update msg model =
               }
             , Cmd.none
             )
+
+        ViewCredits ->
+            ( { model | gameState = Credits }, Cmd.none )
 
 
 
@@ -176,12 +186,13 @@ view model =
             div []
                 [ gameHeader
                 , levelSelectView model.highestLevel
+                , div [] [ button [ onClick ViewCredits ] [ text "Credits" ] ]
                 ]
 
         Credits ->
             div []
                 [ gameHeader
-                , text "credits"
+                , text "created by Rob Bethencourt"
                 ]
 
 
@@ -307,7 +318,7 @@ port messageReceiver : (Int -> msg) -> Sub msg
 
 type JSMsg
     = GetHighestLevel
-    | SaveHighestLevel
+    | SetHighestLevel
     | ResetHighestLevel
 
 
@@ -317,7 +328,7 @@ jsmToString jsm =
         GetHighestLevel ->
             "getHighestLevel"
 
-        SaveHighestLevel ->
+        SetHighestLevel ->
             "setHighestLevel"
 
         ResetHighestLevel ->
@@ -328,5 +339,5 @@ encodeJSMsg : JSMsg -> Int -> Encode.Value
 encodeJSMsg jsm newLevel =
     Encode.object
         [ ( "jsMsg", Encode.string <| jsmToString jsm )
-        , ( "valaue", Encode.int newLevel )
+        , ( "value", Encode.int newLevel )
         ]
