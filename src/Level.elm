@@ -40,7 +40,7 @@ allLevels =
     , Level 14 ( BlueGreen, RedOrange, Green ) ( NoColor, NoColor, NoColor ) NoColor
     , Level 15 ( RedOrange, YellowGreen, Green ) ( NoColor, NoColor, NoColor ) NoColor
     , Level 16 ( Purple, Green, BluePurple ) ( NoColor, NoColor, NoColor ) NoColor
-    , Level 17 ( YellowOrange, RedPurple, Purple ) ( NoColor, NoColor, NoColor ) NoColor
+    , Level 17 ( Orange, RedPurple, Purple ) ( NoColor, NoColor, NoColor ) NoColor
     ]
 
 

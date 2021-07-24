@@ -2,10 +2,10 @@ port module Main exposing (Model, Msg(..), init, main, subscriptions, update, vi
 
 import Browser
 import Html exposing (Html, button, div, header, li, section, text, ul)
-import Html.Attributes exposing (class)
+import Html.Attributes exposing (class, disabled)
 import Html.Events exposing (onClick)
 import Json.Encode as Encode
-import Level
+import Level exposing (Level)
 
 
 
@@ -70,6 +70,7 @@ type Msg
     | MixColors Int Level.Color Level.Level
     | ResetLevel Int
     | ViewCredits
+    | ResetLevelProgress
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -95,7 +96,7 @@ update msg model =
             ( { model | gameState = Playing level CurrentlyPlaying }, Cmd.none )
 
         SelectLevel ->
-            ( { model | gameState = LevelSelect }, Cmd.none )
+            ( { model | gameState = LevelSelect, colorSwatches = Level.initColorSwatch }, Cmd.none )
 
         SelectColorSwatch color level ->
             ( { model
@@ -124,16 +125,33 @@ update msg model =
                             |> List.filter (\a -> a.levelNumber == level.levelNumber + 1)
                             |> List.head
                             |> Maybe.withDefault Level.defaultLevel
+
+                    ( cmd, hl ) =
+                        if level.levelNumber < model.highestLevel then
+                            ( Cmd.none, model.highestLevel )
+
+                        else
+                            ( sendMessage <| encodeJSMsg SetHighestLevel (level.levelNumber + 1), level.levelNumber + 1 )
+
+                    newGameState =
+                        if level.levelNumber == List.length Level.allLevels then
+                            -- allow the highestLevel to increase higher than the levels list
+                            -- in case i add more levels later
+                            -- and so that it doesn't display a current level in level select that has already been beaten
+                            Credits
+
+                        else
+                            Playing newLevel CurrentlyPlaying
                 in
                 ( { model
                     | colorSwatches = Level.initColorSwatch
-                    , highestLevel = level.levelNumber + 1
-                    , gameState = Playing newLevel CurrentlyPlaying
+                    , highestLevel = hl
+                    , gameState = newGameState
                   }
-                , sendMessage <| encodeJSMsg SetHighestLevel (level.levelNumber + 1)
+                , cmd
                 )
-                -- if they do update gameoutcome to Win, disable the buttons
-                -- update highest level in model and localstorage
+                -- if they do update gameoutcome to Win, disable the buttons that choose colors and artboards
+                -- will this change any of the above if statements?
 
             else
                 ( { model | gameState = Playing updatedLevel CurrentlyPlaying }, Cmd.none )
@@ -155,6 +173,9 @@ update msg model =
 
         ViewCredits ->
             ( { model | gameState = Credits }, Cmd.none )
+
+        ResetLevelProgress ->
+            ( { model | highestLevel = 1 }, sendMessage <| encodeJSMsg ResetHighestLevel 1 )
 
 
 
@@ -186,7 +207,10 @@ view model =
             div []
                 [ gameHeader
                 , levelSelectView model.highestLevel
-                , div [] [ button [ onClick ViewCredits ] [ text "Credits" ] ]
+                , div []
+                    [ button [ onClick ViewCredits ] [ text "Credits" ] ]
+                , div []
+                    [ button [ onClick ResetLevelProgress ] [ text "Reset Highest Level" ] ]
                 ]
 
         Credits ->
@@ -301,9 +325,17 @@ levelSelectItem highestLevel level =
 
           else
             class ""
-        , onClick <| PlayLevel level
         ]
-        [ text <| String.fromInt level.levelNumber ++ Level.colorToString colorOne ++ Level.colorToString colorTwo ++ Level.colorToString colorThree ]
+        [ button
+            [ onClick <| PlayLevel level
+            , if level.levelNumber <= highestLevel then
+                disabled False
+
+              else
+                disabled True
+            ]
+            [ text <| String.fromInt level.levelNumber ++ Level.colorToString colorOne ++ Level.colorToString colorTwo ++ Level.colorToString colorThree ]
+        ]
 
 
 

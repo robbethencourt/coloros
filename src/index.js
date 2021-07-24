@@ -26,6 +26,10 @@ app.ports.sendMessage.subscribe(function(msg) {
       break;
     case "setHighestLevel":
         localStorage.setItem("highestLevel", msg.value);
+        break;
+    case "resetHighestLevel":
+        localStorage.setItem("highestLevel", "1");
+        break;
     default:
       break;
   }
