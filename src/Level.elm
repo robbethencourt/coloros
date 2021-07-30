@@ -1,10 +1,12 @@
 module Level exposing
     ( Color
     , Level
+    , LevelOutcome(..)
     , allLevels
+    , checkLevelOutcome
     , colorToString
     , defaultLevel
-    , initColorSwatch
+    , initColorSwatches
     , mixColors
     , stringToColor
     , updateArtboards
@@ -17,36 +19,43 @@ type alias Level =
     { levelNumber : Int
     , colorsToMatch : ( Color, Color, Color )
     , artboards : ( Color, Color, Color )
+    , colorSwatches : ( Color, Color, Color )
     , brushColor : Color
     }
+
+
+type LevelOutcome
+    = CurrentlyPlaying
+    | Win
+    | Loss
 
 
 allLevels : List Level
 allLevels =
     -- i should rethink if i need to keep the current color and artboards in the level data as thi may be better suited elsewhere as they are not unique to each level
-    [ Level 1 ( Red, Yellow, Blue ) ( NoColor, NoColor, NoColor ) NoColor
-    , Level 2 ( Red, Yellow, Green ) ( NoColor, NoColor, NoColor ) NoColor
-    , Level 3 ( Blue, Blue, Yellow ) ( NoColor, NoColor, NoColor ) NoColor
-    , Level 4 ( Green, Green, Yellow ) ( NoColor, NoColor, NoColor ) NoColor
-    , Level 5 ( Orange, Yellow, Blue ) ( NoColor, NoColor, NoColor ) NoColor
-    , Level 6 ( Purple, Purple, Yellow ) ( NoColor, NoColor, NoColor ) NoColor
-    , Level 7 ( Orange, Purple, Yellow ) ( NoColor, NoColor, NoColor ) NoColor
-    , Level 8 ( Purple, Purple, Green ) ( NoColor, NoColor, NoColor ) NoColor
-    , Level 9 ( Orange, Purple, Purple ) ( NoColor, NoColor, NoColor ) NoColor
-    , Level 10 ( RedOrange, Blue, Green ) ( NoColor, NoColor, NoColor ) NoColor
-    , Level 11 ( Red, YellowOrange, Purple ) ( NoColor, NoColor, NoColor ) NoColor
-    , Level 12 ( BlueGreen, Green, Orange ) ( NoColor, NoColor, NoColor ) NoColor
-    , Level 13 ( RedOrange, Orange, Green ) ( NoColor, NoColor, NoColor ) NoColor
-    , Level 14 ( BlueGreen, RedOrange, Green ) ( NoColor, NoColor, NoColor ) NoColor
-    , Level 15 ( RedOrange, YellowGreen, Green ) ( NoColor, NoColor, NoColor ) NoColor
-    , Level 16 ( Purple, Green, BluePurple ) ( NoColor, NoColor, NoColor ) NoColor
-    , Level 17 ( Orange, RedPurple, Purple ) ( NoColor, NoColor, NoColor ) NoColor
+    [ Level 1 ( Red, Yellow, Blue ) ( NoColor, NoColor, NoColor ) initColorSwatches NoColor
+    , Level 2 ( Red, Yellow, Green ) ( NoColor, NoColor, NoColor ) initColorSwatches NoColor
+    , Level 3 ( Blue, Blue, Yellow ) ( NoColor, NoColor, NoColor ) initColorSwatches NoColor
+    , Level 4 ( Green, Green, Yellow ) ( NoColor, NoColor, NoColor ) initColorSwatches NoColor
+    , Level 5 ( Orange, Yellow, Blue ) ( NoColor, NoColor, NoColor ) initColorSwatches NoColor
+    , Level 6 ( Purple, Purple, Yellow ) ( NoColor, NoColor, NoColor ) initColorSwatches NoColor
+    , Level 7 ( Orange, Purple, Yellow ) ( NoColor, NoColor, NoColor ) initColorSwatches NoColor
+    , Level 8 ( Purple, Purple, Green ) ( NoColor, NoColor, NoColor ) initColorSwatches NoColor
+    , Level 9 ( Orange, Purple, Purple ) ( NoColor, NoColor, NoColor ) initColorSwatches NoColor
+    , Level 10 ( RedOrange, Blue, Green ) ( NoColor, NoColor, NoColor ) initColorSwatches NoColor
+    , Level 11 ( Red, YellowOrange, Purple ) ( NoColor, NoColor, NoColor ) initColorSwatches NoColor
+    , Level 12 ( BlueGreen, Green, Orange ) ( NoColor, NoColor, NoColor ) initColorSwatches NoColor
+    , Level 13 ( RedOrange, Orange, Green ) ( NoColor, NoColor, NoColor ) initColorSwatches NoColor
+    , Level 14 ( BlueGreen, RedOrange, Green ) ( NoColor, NoColor, NoColor ) initColorSwatches NoColor
+    , Level 15 ( RedOrange, YellowGreen, Green ) ( NoColor, NoColor, NoColor ) initColorSwatches NoColor
+    , Level 16 ( Purple, Green, BluePurple ) ( NoColor, NoColor, NoColor ) initColorSwatches NoColor
+    , Level 17 ( Orange, RedPurple, Purple ) ( NoColor, NoColor, NoColor ) initColorSwatches NoColor
     ]
 
 
 defaultLevel : Level
 defaultLevel =
-    Level 1 ( Red, Yellow, Blue ) ( NoColor, NoColor, NoColor ) NoColor
+    Level 1 ( Red, Yellow, Blue ) ( NoColor, NoColor, NoColor ) initColorSwatches NoColor
 
 
 type Color
@@ -70,29 +79,9 @@ type Color
 -- color swatch
 
 
-initColorSwatch : ( Color, Color, Color )
-initColorSwatch =
+initColorSwatches : ( Color, Color, Color )
+initColorSwatches =
     ( Red, Yellow, Blue )
-
-
-updateColorSwatch : ( Color, Color, Color ) -> Color -> ( Color, Color, Color )
-updateColorSwatch currentColorSwatches color =
-    let
-        ( redSwatch, yellowSwatch, blueSwatch ) =
-            currentColorSwatches
-    in
-    case color of
-        Red ->
-            ( NoColor, yellowSwatch, blueSwatch )
-
-        Yellow ->
-            ( redSwatch, NoColor, blueSwatch )
-
-        Blue ->
-            ( redSwatch, yellowSwatch, NoColor )
-
-        _ ->
-            currentColorSwatches
 
 
 
@@ -341,9 +330,29 @@ stringToColor str =
 -- updating Level record
 
 
-updateBrushColor : Level -> Color -> Level
-updateBrushColor level newColor =
+updateBrushColor : Color -> Level -> Level
+updateBrushColor newColor level =
     { level | brushColor = newColor }
+
+
+updateColorSwatch : Color -> Level -> Level
+updateColorSwatch color level =
+    let
+        ( redSwatch, yellowSwatch, blueSwatch ) =
+            level.colorSwatches
+    in
+    case color of
+        Red ->
+            { level | colorSwatches = ( NoColor, yellowSwatch, blueSwatch ) }
+
+        Yellow ->
+            { level | colorSwatches = ( redSwatch, NoColor, blueSwatch ) }
+
+        Blue ->
+            { level | colorSwatches = ( redSwatch, yellowSwatch, NoColor ) }
+
+        _ ->
+            level
 
 
 updateArtboards : Color -> Int -> Level -> Level
@@ -361,3 +370,20 @@ updateArtboards newColor artboardNumber level =
 
         _ ->
             { level | artboards = ( artboardOne, artboardTwo, newColor ) }
+
+
+checkLevelOutcome : ( Color, Color, Color ) -> ( Color, Color, Color ) -> LevelOutcome
+checkLevelOutcome colorsToMatch artboards =
+    if colorsToMatch == artboards then
+        Win
+
+    else
+        let
+            ( csw1, csw2, csw3 ) =
+                artboards
+        in
+        if csw1 == Brown || csw2 == Brown || csw3 == Brown then
+            Loss
+
+        else
+            CurrentlyPlaying
