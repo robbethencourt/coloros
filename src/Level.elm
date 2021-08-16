@@ -32,24 +32,22 @@ type LevelOutcome
 
 allLevels : List Level
 allLevels =
-    -- i should rethink if i need to keep the current color and artboards in the level data as thi may be better suited elsewhere as they are not unique to each level
     [ Level 1 ( Red, Yellow, Blue ) ( NoColor, NoColor, NoColor ) initColorSwatches NoColor
     , Level 2 ( Red, Yellow, Green ) ( NoColor, NoColor, NoColor ) initColorSwatches NoColor
-    , Level 3 ( Blue, Blue, Yellow ) ( NoColor, NoColor, NoColor ) initColorSwatches NoColor
-    , Level 4 ( Green, Green, Yellow ) ( NoColor, NoColor, NoColor ) initColorSwatches NoColor
-    , Level 5 ( Orange, Yellow, Blue ) ( NoColor, NoColor, NoColor ) initColorSwatches NoColor
-    , Level 6 ( Purple, Purple, Yellow ) ( NoColor, NoColor, NoColor ) initColorSwatches NoColor
-    , Level 7 ( Orange, Purple, Yellow ) ( NoColor, NoColor, NoColor ) initColorSwatches NoColor
-    , Level 8 ( Purple, Purple, Green ) ( NoColor, NoColor, NoColor ) initColorSwatches NoColor
-    , Level 9 ( Orange, Purple, Purple ) ( NoColor, NoColor, NoColor ) initColorSwatches NoColor
-    , Level 10 ( RedOrange, Blue, Green ) ( NoColor, NoColor, NoColor ) initColorSwatches NoColor
-    , Level 11 ( Red, YellowOrange, Purple ) ( NoColor, NoColor, NoColor ) initColorSwatches NoColor
+    , Level 3 ( Red, Orange, Blue ) ( NoColor, NoColor, NoColor ) initColorSwatches NoColor
+    , Level 4 ( Purple, Yellow, Blue ) ( NoColor, NoColor, NoColor ) initColorSwatches NoColor
+    , Level 5 ( Blue, Blue, Yellow ) ( NoColor, NoColor, NoColor ) initColorSwatches NoColor
+    , Level 6 ( Green, Green, Yellow ) ( NoColor, NoColor, NoColor ) initColorSwatches NoColor
+    , Level 7 ( Orange, Yellow, Purple ) ( NoColor, NoColor, NoColor ) initColorSwatches NoColor
+    , Level 8 ( Purple, Purple, Yellow ) ( NoColor, NoColor, NoColor ) initColorSwatches NoColor
+    , Level 9 ( Purple, Purple, Green ) ( NoColor, NoColor, NoColor ) initColorSwatches NoColor
+    , Level 10 ( Orange, Purple, Purple ) ( NoColor, NoColor, NoColor ) initColorSwatches NoColor
+    , Level 11 ( RedOrange, Orange, Purple ) ( NoColor, NoColor, NoColor ) initColorSwatches NoColor
     , Level 12 ( BlueGreen, Green, Orange ) ( NoColor, NoColor, NoColor ) initColorSwatches NoColor
-    , Level 13 ( RedOrange, Orange, Green ) ( NoColor, NoColor, NoColor ) initColorSwatches NoColor
-    , Level 14 ( BlueGreen, RedOrange, Green ) ( NoColor, NoColor, NoColor ) initColorSwatches NoColor
-    , Level 15 ( RedOrange, YellowGreen, Green ) ( NoColor, NoColor, NoColor ) initColorSwatches NoColor
-    , Level 16 ( Purple, Green, BluePurple ) ( NoColor, NoColor, NoColor ) initColorSwatches NoColor
-    , Level 17 ( Orange, RedPurple, Purple ) ( NoColor, NoColor, NoColor ) initColorSwatches NoColor
+    , Level 13 ( YellowOrange, Orange, Purple ) ( NoColor, NoColor, NoColor ) initColorSwatches NoColor
+    , Level 14 ( Orange, YellowGreen, Green ) ( NoColor, NoColor, NoColor ) initColorSwatches NoColor
+    , Level 15 ( Purple, Green, BluePurple ) ( NoColor, NoColor, NoColor ) initColorSwatches NoColor
+    , Level 16 ( Orange, RedPurple, Purple ) ( NoColor, NoColor, NoColor ) initColorSwatches NoColor
     ]
 
 
