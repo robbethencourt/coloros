@@ -1,11 +1,12 @@
 port module Main exposing (Model, Msg(..), init, main, subscriptions, update, view)
 
 import Browser
-import Html exposing (Html, button, div, header, li, section, text, ul)
-import Html.Attributes exposing (class, disabled)
+import Html exposing (Html, button, div, header, img, li, section, text, ul)
+import Html.Attributes exposing (class, disabled, src, style)
 import Html.Events exposing (onClick)
 import Json.Encode as Encode
 import Level
+import Logo
 import Process
 import Task
 
@@ -234,10 +235,10 @@ view model =
             div []
                 [ gameHeader
                 , levelSelectView model.highestLevel
-                , div []
-                    [ button [ onClick ViewCredits ] [ text "Credits" ] ]
-                , div []
-                    [ button [ onClick ResetLevelProgress ] [ text "Reset Highest Level" ] ]
+                , div [ class "main-screen-button-wrapper" ]
+                    [ button [ onClick ViewCredits, class "credits-button" ] [ text "Credits" ]
+                    , button [ onClick ResetLevelProgress, class "reset-button" ] [ text "Reset Game to Level 1" ]
+                    ]
                 ]
 
         Credits ->
@@ -250,7 +251,7 @@ view model =
 gameHeader : Html Msg
 gameHeader =
     header [ onClick SelectLevel ]
-        [ text "Coloros" ]
+        [ Logo.logo ]
 
 
 playingView : Level.Level -> Level.LevelOutcome -> Html Msg
@@ -276,36 +277,36 @@ playingView level levelOutcome =
     div []
         [ section [ class "artboards" ]
             [ div [ class "color-one-set" ]
-                [ div [ class "color-one" ] [ text <| Level.colorToString colorOneToMatch ]
+                [ div [ class "color-one" ] [ text <| Level.colorToHex colorOneToMatch ]
                 , div [ class "color-one-to-match" ]
                     [ button
-                        [ class <| Level.colorToString artboardOne
+                        [ class <| Level.colorToHex artboardOne
                         , onClick <| MixColors 1 artboardOne level
                         , disabled isDisabled
                         ]
-                        [ text <| Level.colorToString artboardOne ]
+                        [ text <| Level.colorToHex artboardOne ]
                     ]
                 ]
             , div [ class "color-two-set" ]
-                [ div [ class "color-two" ] [ text <| Level.colorToString colorTwoToMatch ]
+                [ div [ class "color-two" ] [ text <| Level.colorToHex colorTwoToMatch ]
                 , div [ class "color-two-to-match" ]
                     [ button
-                        [ class <| Level.colorToString artboardTwo
+                        [ class <| Level.colorToHex artboardTwo
                         , onClick <| MixColors 2 artboardTwo level
                         , disabled isDisabled
                         ]
-                        [ text <| Level.colorToString artboardTwo ]
+                        [ text <| Level.colorToHex artboardTwo ]
                     ]
                 ]
             , div [ class "color-three-set" ]
-                [ div [ class "color-three" ] [ text <| Level.colorToString colorThreeToMatch ]
+                [ div [ class "color-three" ] [ text <| Level.colorToHex colorThreeToMatch ]
                 , div [ class "color-three-to-match" ]
                     [ button
-                        [ class <| Level.colorToString artboardThree
+                        [ class <| Level.colorToHex artboardThree
                         , onClick <| MixColors 3 artboardThree level
                         , disabled isDisabled
                         ]
-                        [ text <| Level.colorToString artboardThree ]
+                        [ text <| Level.colorToHex artboardThree ]
                     ]
                 ]
             ]
@@ -313,32 +314,32 @@ playingView level levelOutcome =
             [ ul []
                 [ li []
                     [ button
-                        [ class <| Level.colorToString redSwatch
+                        [ class <| Level.colorToHex redSwatch
                         , onClick <| SelectColorSwatch redSwatch level
                         , disabled isDisabled
                         ]
-                        [ text <| Level.colorToString redSwatch ]
+                        [ text <| Level.colorToHex redSwatch ]
                     ]
                 , li []
                     [ button
-                        [ class <| Level.colorToString yellowSwatch
+                        [ class <| Level.colorToHex yellowSwatch
                         , onClick <| SelectColorSwatch yellowSwatch level
                         , disabled isDisabled
                         ]
-                        [ text <| Level.colorToString yellowSwatch ]
+                        [ text <| Level.colorToHex yellowSwatch ]
                     ]
                 , li []
                     [ button
-                        [ class <| Level.colorToString blueSwatch
+                        [ class <| Level.colorToHex blueSwatch
                         , onClick <| SelectColorSwatch blueSwatch level
                         , disabled isDisabled
                         ]
-                        [ text <| Level.colorToString blueSwatch ]
+                        [ text <| Level.colorToHex blueSwatch ]
                     ]
                 ]
             ]
         , section [ class "current-color" ]
-            [ div [] [ text <| Level.colorToString level.brushColor ]
+            [ div [] [ text <| Level.colorToHex level.brushColor ]
             , div [] [ button [ onClick <| ResetLevel level.levelNumber ] [ text "reset" ] ]
             ]
         ]
@@ -346,7 +347,7 @@ playingView level levelOutcome =
 
 levelSelectView : Int -> Html Msg
 levelSelectView highestLevel =
-    ul [] (levelsToSelect Level.allLevels highestLevel)
+    ul [ class "level-select-wrapper" ] (levelsToSelect Level.allLevels highestLevel)
 
 
 levelsToSelect : List Level.Level -> Int -> List (Html Msg)
@@ -375,7 +376,12 @@ levelSelectItem highestLevel level =
               else
                 disabled True
             ]
-            [ text <| String.fromInt level.levelNumber ++ Level.colorToString colorOne ++ Level.colorToString colorTwo ++ Level.colorToString colorThree ]
+            [ div [ class "level-select-color-wrapper" ]
+                [ div [ class "level-select-color", style "background-color" (Level.colorToHex colorOne) ] []
+                , div [ class "level-select-color", style "background-color" (Level.colorToHex colorTwo) ] []
+                , div [ class "level-select-color", style "background-color" (Level.colorToHex colorThree) ] []
+                ]
+            ]
         ]
 
 

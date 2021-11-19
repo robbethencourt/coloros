@@ -1,17 +1,45 @@
 /* CSS Variables */
 :root {
-    white: #F1F2F9;
-    red: #FF1400;
-    yellow: #FFEA00;
-    blue: #0055FF;
-    orange: #FF5F0F;
-    green: #00BF33;
-    purple: #8600CF;
-    red-orange: #FF4203;
-    yellow-orange: #FFAD29;
-    yellow-green: #95EB00;
-    blue-green: #00EDD2;
-    blue-purple: #4D17D4;
-    red-purple: #D41782;
-    brown: #4F240F;
+    --white: #F1F2F9;
+    --red: #FF1400;
+    --yellow: #FFEA00;
+    --blue: #0055FF;
+    --orange: #FF5F0F;
+    --green: #00BF33;
+    --purple: #8600CF;
+    --red-orange: #FF4203;
+    --yellow-orange: #FFAD29;
+    --yellow-green: #95EB00;
+    --blue-green: #00EDD2;
+    --blue-purple: #4D17D4;
+    --red-purple: #D41782;
+    --brown: #4F240F;
+}
+
+body {
+    font-family: sans-serif;
+}
+
+.main-screen-button-wrapper {
+    display: flex;
+    flex-direction: column;
+    padding: 20px 0;
+}
+
+.credits-button, .reset-button {
+    align-self: center;
+    margin: 30px 0;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 3px;
+    outline: none;
+    color: var(--white);
+}
+
+.credits-button {
+    background-color: var(--blue);
+}
+
+.reset-button {
+    background-color: var(--red);
 }
