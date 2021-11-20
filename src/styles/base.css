@@ -15,9 +15,72 @@
     --red-purple: #D41782;
     --brown: #4F240F;
 }
+.white {
+    background-color: var(--white);
+}
+
+.red {
+    background-color: var(--red);
+}
+
+.yellow {
+    background-color: var(--yellow);
+}
+
+.blue {
+    background-color: var(--blue);
+}
+
+.orange {
+    background-color: var(--orange);
+}
+
+.green {
+    background-color: var(--green);
+}
+
+.purple {
+    background-color: var(--purple);
+}
+
+.red-orange {
+    background-color: var(--red-orange);
+}
+
+.yellow-orange {
+    background-color: var(--yellow-orange);
+}
+
+.yellow-green {
+    background-color: var(--yellow-green);
+}
+
+.blue-green {
+    background-color: var(--blue-green);
+}
+
+.blue-purple {
+    background-color: var(--blue-purple);
+}
+
+.red-purple {
+    background-color: var(--red-purple);
+}
+
+.brown {
+    background-color: var(--brown);
+}
 
 body {
     font-family: sans-serif;
+}
+
+button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 3px;
+    outline: none;
+    color: var(--white);
 }
 
 .main-screen-button-wrapper {
@@ -29,11 +92,6 @@ body {
 .credits-button, .reset-button {
     align-self: center;
     margin: 30px 0;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 3px;
-    outline: none;
-    color: var(--white);
 }
 
 .credits-button {

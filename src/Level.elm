@@ -4,7 +4,7 @@ module Level exposing
     , LevelOutcome(..)
     , allLevels
     , checkLevelOutcome
-    , colorToHex
+    , colorToString
     , defaultLevel
     , initColorSwatches
     , mixColors
@@ -232,50 +232,50 @@ mixWithPurple brushColor =
 -- helper functions
 
 
-colorToHex : Color -> String
-colorToHex color =
+colorToString : Color -> String
+colorToString color =
     case color of
         NoColor ->
-            "#F1F2F9"
+            "white"
 
         Red ->
-            "#FF1400"
+            "red"
 
         Yellow ->
-            "#FFEA00"
+            "yellow"
 
         Blue ->
-            "#0055FF"
+            "blue"
 
         Orange ->
-            "#FF5F0F"
+            "orange"
 
         Green ->
-            "#00BF33"
+            "green"
 
         Purple ->
-            "#8600CF"
+            "purple"
 
         RedOrange ->
-            "#FF4203"
+            "red-orange"
 
         YellowOrange ->
-            "#FFAD29"
+            "yellow-orange"
 
         YellowGreen ->
-            "#95EB00"
+            "yellow-green"
 
         BlueGreen ->
-            "#00EDD2"
+            "blue-green"
 
         BluePurple ->
-            "#4D17D4"
+            "blue-purple"
 
         RedPurple ->
-            "#D41782"
+            "red-purple"
 
         Brown ->
-            "#4F240F"
+            "brown"
 
 
 stringToColor : String -> Color

@@ -1,0 +1,54 @@
+/* artboards */
+
+.artboards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: minmax(100px, auto);
+}
+
+.color-one-set {
+    grid-column: 1;
+    grid-row: 1;
+}
+
+.color-two-set {
+    grid-column: 2;
+    grid-row: 1;
+}
+
+.color-three-set {
+    grid-column: 3;
+    grid-row: 1;
+}
+
+.color-one-set div, .color-two-set div, .color-three-set div {
+    height: 200px;
+}
+
+.color-one-set div button, .color-two-set div button, .color-three-set div button {
+    height: 100%;
+    width: 100%;
+}
+
+/* color swatches */
+
+.colors-swatches {
+    padding: 50px 0;
+}
+
+.colors-swatches ul {
+    display: grid;
+    gap: 0px;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+}
+
+.colors-swatches ul li button {
+    height: 80px;
+    width: 80px;
+    display: block;
+    margin: 0 auto;
+    border-radius: 40px;
+}
