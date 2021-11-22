@@ -1,7 +1,7 @@
 port module Main exposing (Model, Msg(..), init, main, subscriptions, update, view)
 
 import Browser
-import Html exposing (Html, button, div, header, img, li, section, text, ul)
+import Html exposing (Html, br, button, div, h1, header, img, li, section, span, text, ul)
 import Html.Attributes exposing (class, disabled, src)
 import Html.Events exposing (onClick)
 import Json.Encode as Encode
@@ -244,7 +244,11 @@ view model =
         Credits ->
             div []
                 [ gameHeader
-                , text "created by Rob Bethencourt"
+                , h1 [ class "credits" ]
+                    [ span [ class "created-by" ] [ text "created by" ]
+                    , br [] []
+                    , span [ class "my-name" ] [ text "Rob Bethencourt" ]
+                    ]
                 ]
 
 
@@ -339,8 +343,8 @@ playingView level levelOutcome =
                 ]
             ]
         , section [ class "current-color" ]
-            [ div [] [ text <| Level.colorToString level.brushColor ]
-            , div [] [ button [ onClick <| ResetLevel level.levelNumber ] [ text "reset" ] ]
+            [ div [ class <| "brush-color " ++ Level.colorToString level.brushColor ] []
+            , div [ class "reset-wrapper" ] [ button [ onClick <| ResetLevel level.levelNumber, class "red" ] [ text "reset" ] ]
             ]
         ]
 

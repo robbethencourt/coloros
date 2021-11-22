@@ -81,6 +81,7 @@ button {
     border-radius: 3px;
     outline: none;
     color: var(--white);
+    background-color: var(--white);
 }
 
 .main-screen-button-wrapper {

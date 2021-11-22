@@ -28,6 +28,7 @@
 .color-one-set div button, .color-two-set div button, .color-three-set div button {
     height: 100%;
     width: 100%;
+    border-radius: 0;
 }
 
 /* color swatches */
@@ -51,4 +52,16 @@
     display: block;
     margin: 0 auto;
     border-radius: 40px;
+}
+
+.brush-color {
+    width: 100px;
+    height: 100px;
+    margin: 0 auto;
+}
+
+.reset-wrapper {
+    display: flex;
+    justify-content: center;
+    padding-top: 50px;;
 }
