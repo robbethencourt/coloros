@@ -71,6 +71,80 @@
     background-color: var(--brown);
 }
 
+/* svg color fill and stroke */
+
+.svg-white {
+    fill: var(--white);
+    stroke: var(--white);
+}
+
+.svg-red {
+    fill: var(--red);
+    stroke: var(--red);
+}
+
+.svg-yellow {
+    fill: var(--yellow);
+    stroke: var(--yellow);
+}
+
+.svg-blue {
+    fill: var(--blue);
+    stroke: var(--blue);
+}
+
+.svg-orange {
+    fill: var(--orange);
+    stroke: var(--orange);
+}
+
+.svg-green {
+    fill: var(--green);
+    stroke: var(--green);
+}
+
+.svg-purple {
+    fill: var(--purple);
+    stroke: var(--purple);
+}
+
+.svg-red-orange {
+    fill: var(--red-orange);
+    stroke: var(--red-orange);
+}
+
+.svg-yellow-orange {
+    fill: var(--yellow-orange);
+    stroke: var(--yellow-orange);
+}
+
+.svg-yellow-green {
+    fill: var(--yellow-green);
+    stroke: var(--yellow-green);
+}
+
+.svg-blue-green {
+    fill: var(--blue-green);
+    stroke: var(--blue-green);
+}
+
+.svg-blue-purple {
+    fill: var(--blue-purple);
+    stroke: var(--blue-purple);
+}
+
+.svg-red-purple {
+    fill: var(--red-purple);
+    stroke: var(--red-purple);
+}
+
+.svg-brown {
+    fill: var(--brown);
+    stroke: var(--brown);
+}
+
+/* general element styles */
+
 body {
     font-family: sans-serif;
 }

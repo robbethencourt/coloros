@@ -1,8 +1,9 @@
 port module Main exposing (Model, Msg(..), init, main, subscriptions, update, view)
 
+import Artbrush exposing (artbrush)
 import Browser
-import Html exposing (Html, br, button, div, h1, header, img, li, section, span, text, ul)
-import Html.Attributes exposing (class, disabled, src)
+import Html exposing (Html, br, button, div, h1, header, li, section, span, text, ul)
+import Html.Attributes exposing (class, disabled)
 import Html.Events exposing (onClick)
 import Json.Encode as Encode
 import Level
@@ -343,7 +344,7 @@ playingView level levelOutcome =
                 ]
             ]
         , section [ class "current-color" ]
-            [ div [ class <| "brush-color " ++ Level.colorToString level.brushColor ] []
+            [ div [ class "brush-color" ] [ Artbrush.artbrush <| Level.colorToString level.brushColor ]
             , div [ class "reset-wrapper" ] [ button [ onClick <| ResetLevel level.levelNumber, class "red" ] [ text "reset" ] ]
             ]
         ]
