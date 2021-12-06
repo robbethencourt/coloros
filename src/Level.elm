@@ -7,6 +7,7 @@ module Level exposing
     , colorToString
     , defaultLevel
     , initColorSwatches
+    , levelOutcomeToString
     , mixColors
     , stringToColor
     , updateArtboards
@@ -28,6 +29,19 @@ type LevelOutcome
     = CurrentlyPlaying
     | Win
     | Loss
+
+
+levelOutcomeToString : LevelOutcome -> String
+levelOutcomeToString levelOutcome =
+    case levelOutcome of
+        CurrentlyPlaying ->
+            "currentlyPlaying"
+
+        Win ->
+            "win"
+
+        Loss ->
+            "loss"
 
 
 allLevels : List Level

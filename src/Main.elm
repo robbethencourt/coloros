@@ -279,7 +279,7 @@ playingView level levelOutcome =
                 _ ->
                     True
     in
-    div []
+    div [ class <| Level.levelOutcomeToString levelOutcome ]
         [ section [ class "artboards" ]
             [ div [ class "color-one-set" ]
                 [ div [ class <| "color-one " ++ Level.colorToString colorOneToMatch ] []

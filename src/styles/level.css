@@ -23,12 +23,20 @@
 
 .color-one-set div, .color-two-set div, .color-three-set div {
     height: 200px;
+    transform-origin: top;
 }
 
 .color-one-set div button, .color-two-set div button, .color-three-set div button {
     height: 100%;
     width: 100%;
     border-radius: 0;
+}
+
+/* artboard animations */
+
+.win div.color-one, .win div.color-two, .win div.color-three {
+    transition-duration: .25s;
+    transform: scaley(10);
 }
 
 /* color swatches */
