@@ -1,0 +1,31 @@
+/* level select styles */
+.level-select-wrapper {
+    list-style-type: none;
+    margin: 0 10px;
+    padding: 0;
+    display: grid;
+    gap: 10px;
+    grid-auto-rows: minmax(100px, auto);
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.level-select-wrapper li button {
+    border: none;
+    height: 100px;
+    width: 100%;
+    padding: 10px;
+    border-radius: 3px;
+}
+
+.level-select-wrapper li button:disabled {
+    opacity: .1;
+}
+
+.level-select-color-wrapper {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.level-select-color {
+    height: 80px;
+}

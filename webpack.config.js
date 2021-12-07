@@ -44,7 +44,7 @@ var common = {
             },
             {
                 test: /\.css$/,
-                exclude: [/elm-stuff/, /node_modules/],
+                exclude: [/elm-stuff/],
                 use: ["style-loader", "css-loader?url=false"]
             },
             {

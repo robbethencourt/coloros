@@ -1,11 +1,13 @@
 port module Main exposing (Model, Msg(..), init, main, subscriptions, update, view)
 
+import Artbrush exposing (artbrush)
 import Browser
-import Html exposing (Html, button, div, header, li, section, text, ul)
+import Html exposing (Html, br, button, div, h1, header, li, section, span, text, ul)
 import Html.Attributes exposing (class, disabled)
 import Html.Events exposing (onClick)
 import Json.Encode as Encode
 import Level
+import Logo
 import Process
 import Task
 
@@ -234,23 +236,27 @@ view model =
             div []
                 [ gameHeader
                 , levelSelectView model.highestLevel
-                , div []
-                    [ button [ onClick ViewCredits ] [ text "Credits" ] ]
-                , div []
-                    [ button [ onClick ResetLevelProgress ] [ text "Reset Highest Level" ] ]
+                , div [ class "main-screen-button-wrapper" ]
+                    [ button [ onClick ViewCredits, class "credits-button" ] [ text "Credits" ]
+                    , button [ onClick ResetLevelProgress, class "reset-button" ] [ text "Reset Game to Level 1" ]
+                    ]
                 ]
 
         Credits ->
             div []
                 [ gameHeader
-                , text "created by Rob Bethencourt"
+                , h1 [ class "credits" ]
+                    [ span [ class "created-by" ] [ text "created by" ]
+                    , br [] []
+                    , span [ class "my-name" ] [ text "Rob Bethencourt" ]
+                    ]
                 ]
 
 
 gameHeader : Html Msg
 gameHeader =
     header [ onClick SelectLevel ]
-        [ text "Coloros" ]
+        [ Logo.logo ]
 
 
 playingView : Level.Level -> Level.LevelOutcome -> Html Msg
@@ -273,39 +279,39 @@ playingView level levelOutcome =
                 _ ->
                     True
     in
-    div []
+    div [ class <| Level.levelOutcomeToString levelOutcome ]
         [ section [ class "artboards" ]
             [ div [ class "color-one-set" ]
-                [ div [ class "color-one" ] [ text <| Level.colorToString colorOneToMatch ]
+                [ div [ class <| "color-one " ++ Level.colorToString colorOneToMatch ] []
                 , div [ class "color-one-to-match" ]
                     [ button
                         [ class <| Level.colorToString artboardOne
                         , onClick <| MixColors 1 artboardOne level
                         , disabled isDisabled
                         ]
-                        [ text <| Level.colorToString artboardOne ]
+                        []
                     ]
                 ]
             , div [ class "color-two-set" ]
-                [ div [ class "color-two" ] [ text <| Level.colorToString colorTwoToMatch ]
+                [ div [ class <| "color-two " ++ Level.colorToString colorTwoToMatch ] []
                 , div [ class "color-two-to-match" ]
                     [ button
                         [ class <| Level.colorToString artboardTwo
                         , onClick <| MixColors 2 artboardTwo level
                         , disabled isDisabled
                         ]
-                        [ text <| Level.colorToString artboardTwo ]
+                        []
                     ]
                 ]
             , div [ class "color-three-set" ]
-                [ div [ class "color-three" ] [ text <| Level.colorToString colorThreeToMatch ]
+                [ div [ class <| "color-three " ++ Level.colorToString colorThreeToMatch ] []
                 , div [ class "color-three-to-match" ]
                     [ button
                         [ class <| Level.colorToString artboardThree
                         , onClick <| MixColors 3 artboardThree level
                         , disabled isDisabled
                         ]
-                        [ text <| Level.colorToString artboardThree ]
+                        []
                     ]
                 ]
             ]
@@ -317,7 +323,7 @@ playingView level levelOutcome =
                         , onClick <| SelectColorSwatch redSwatch level
                         , disabled isDisabled
                         ]
-                        [ text <| Level.colorToString redSwatch ]
+                        []
                     ]
                 , li []
                     [ button
@@ -325,7 +331,7 @@ playingView level levelOutcome =
                         , onClick <| SelectColorSwatch yellowSwatch level
                         , disabled isDisabled
                         ]
-                        [ text <| Level.colorToString yellowSwatch ]
+                        []
                     ]
                 , li []
                     [ button
@@ -333,20 +339,20 @@ playingView level levelOutcome =
                         , onClick <| SelectColorSwatch blueSwatch level
                         , disabled isDisabled
                         ]
-                        [ text <| Level.colorToString blueSwatch ]
+                        []
                     ]
                 ]
             ]
         , section [ class "current-color" ]
-            [ div [] [ text <| Level.colorToString level.brushColor ]
-            , div [] [ button [ onClick <| ResetLevel level.levelNumber ] [ text "reset" ] ]
+            [ div [ class "brush-color" ] [ Artbrush.artbrush <| Level.colorToString level.brushColor ]
+            , div [ class "reset-wrapper" ] [ button [ onClick <| ResetLevel level.levelNumber, class "red" ] [ text "reset" ] ]
             ]
         ]
 
 
 levelSelectView : Int -> Html Msg
 levelSelectView highestLevel =
-    ul [] (levelsToSelect Level.allLevels highestLevel)
+    ul [ class "level-select-wrapper" ] (levelsToSelect Level.allLevels highestLevel)
 
 
 levelsToSelect : List Level.Level -> Int -> List (Html Msg)
@@ -375,7 +381,12 @@ levelSelectItem highestLevel level =
               else
                 disabled True
             ]
-            [ text <| String.fromInt level.levelNumber ++ Level.colorToString colorOne ++ Level.colorToString colorTwo ++ Level.colorToString colorThree ]
+            [ div [ class "level-select-color-wrapper" ]
+                [ div [ class <| "level-select-color " ++ Level.colorToString colorOne ] []
+                , div [ class <| "level-select-color " ++ Level.colorToString colorTwo ] []
+                , div [ class <| "level-select-color " ++ Level.colorToString colorThree ] []
+                ]
+            ]
         ]
 
 

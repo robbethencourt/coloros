@@ -1,0 +1,12 @@
+.credits {
+    text-align: center;
+    margin-top: 150px;
+}
+
+.created-by {
+    color: var(--green);
+}
+
+.my-name {
+    color: var(--blue);
+}
