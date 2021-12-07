@@ -22,7 +22,7 @@
 }
 
 .color-one-set div, .color-two-set div, .color-three-set div {
-    height: 200px;
+    height: 100px;
     transform-origin: top;
 }
 
