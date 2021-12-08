@@ -14,6 +14,7 @@
     --blue-purple: #4D17D4;
     --red-purple: #D41782;
     --brown: #4F240F;
+    --gray: #808080;
 }
 .white {
     background-color: var(--white);
@@ -69,6 +70,34 @@
 
 .brown {
     background-color: var(--brown);
+}
+
+.gray { 
+    background-color: var(--gray);
+}
+
+.green-text {
+    color :var(--green)
+}
+
+.blue-text {
+    color: var(--blue);
+}
+
+.red-orange-text {
+    color: var(--red-orange);
+}
+
+.blue-purple-text {
+    color: var(--blue-purple);
+}
+
+.yellow-green-text {
+    color: var(--yellow-green);
+}
+
+.red-purple-text {
+    color: var(--red-purple);
 }
 
 /* svg color fill and stroke */
@@ -147,6 +176,7 @@
 
 body {
     font-family: sans-serif;
+    color: var(--gray);
 }
 
 button {
@@ -164,7 +194,7 @@ button {
     padding: 20px 0;
 }
 
-.credits-button, .reset-button {
+.credits-button, .reset-button, .return-to-title-screen-button {
     align-self: center;
     margin: 30px 0;
 }

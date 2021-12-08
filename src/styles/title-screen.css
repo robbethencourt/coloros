@@ -1,0 +1,14 @@
+.title-container {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.title-items-wrapper {
+    text-align: center;
+}
+
+.title-items-wrapper .blue {
+    margin: 50px 0;
+}
