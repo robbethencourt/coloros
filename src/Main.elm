@@ -433,6 +433,6 @@ encodeJSMsg jsm newLevel =
 
 transitionLevelOutcome : Msg -> Cmd Msg
 transitionLevelOutcome msg =
-    Process.sleep 2000
+    Process.sleep 1000
         |> Task.andThen (always <| Task.succeed msg)
         |> Task.perform identity

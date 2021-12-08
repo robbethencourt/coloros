@@ -35,7 +35,7 @@
 /* artboard animations */
 
 .win div.color-one, .win div.color-two, .win div.color-three {
-    transition-duration: .25s;
+    transition-duration: .5s;
     transform: scaley(10);
 }
 
