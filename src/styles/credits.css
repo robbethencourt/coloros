@@ -1,12 +1,8 @@
 .credits {
     text-align: center;
-    margin-top: 150px;
+    margin-top: 50px;
 }
 
-.created-by {
-    color: var(--green);
-}
-
-.my-name {
-    color: var(--blue);
+.credits-name {
+    font-weight: 100;
 }

@@ -1,5 +1,6 @@
 @import "./base.css";
-@import "./level-select.css";
+@import "./title-screen.css";
 @import "./header.css";
+@import "./level-select.css";
 @import "./level.css";
 @import "./credits.css";

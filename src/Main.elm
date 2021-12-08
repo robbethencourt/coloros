@@ -2,7 +2,7 @@ port module Main exposing (Model, Msg(..), init, main, subscriptions, update, vi
 
 import Artbrush exposing (artbrush)
 import Browser
-import Html exposing (Html, br, button, div, h1, header, li, section, span, text, ul)
+import Html exposing (Html, br, button, div, h1, h2, h3, header, li, section, span, text, ul)
 import Html.Attributes exposing (class, disabled)
 import Html.Events exposing (onClick)
 import Json.Encode as Encode
@@ -37,7 +37,7 @@ type alias Model =
 
 
 type State
-    = Loading
+    = TitleScreen
     | Playing Level.Level Level.LevelOutcome
     | LevelSelect
     | Credits
@@ -45,7 +45,7 @@ type State
 
 init : () -> ( Model, Cmd Msg )
 init _ =
-    ( { gameState = Loading
+    ( { gameState = TitleScreen
       , highestLevel = 1
       }
     , sendMessage <| encodeJSMsg GetHighestLevel 0
@@ -66,6 +66,7 @@ type Msg
     | MixColors Int Level.Color Level.Level
     | ResetLevel Int
     | ViewCredits
+    | ViewTitleScreen
     | ResetLevelProgress
     | ResetLevelOutcome Level.Level Level.LevelOutcome
 
@@ -84,7 +85,7 @@ update msg model =
         RecvFromJs highestLevel ->
             ( { model
                 | highestLevel = highestLevel
-                , gameState = LevelSelect
+                , gameState = TitleScreen
               }
             , Cmd.none
             )
@@ -203,6 +204,9 @@ update msg model =
         ViewCredits ->
             ( { model | gameState = Credits }, Cmd.none )
 
+        ViewTitleScreen ->
+            ( { model | gameState = TitleScreen }, Cmd.none )
+
         ResetLevelProgress ->
             ( { model | highestLevel = 1 }, sendMessage <| encodeJSMsg ResetHighestLevel 1 )
 
@@ -223,8 +227,8 @@ subscriptions _ =
 view : Model -> Html Msg
 view model =
     case model.gameState of
-        Loading ->
-            div [] [ text "loading" ]
+        TitleScreen ->
+            titleScreen
 
         Playing level levelOutcome ->
             div []
@@ -239,18 +243,40 @@ view model =
                 , div [ class "main-screen-button-wrapper" ]
                     [ button [ onClick ViewCredits, class "credits-button" ] [ text "Credits" ]
                     , button [ onClick ResetLevelProgress, class "reset-button" ] [ text "Reset Game to Level 1" ]
+                    , button [ onClick ViewTitleScreen, class "return-to-title-screen-button gray" ] [ text "Return to Title Screen" ]
                     ]
                 ]
 
         Credits ->
             div []
                 [ gameHeader
-                , h1 [ class "credits" ]
-                    [ span [ class "created-by" ] [ text "created by" ]
+                , h2 [ class "credits" ]
+                    [ span [] [ text "created by" ]
                     , br [] []
-                    , span [ class "my-name" ] [ text "Rob Bethencourt" ]
+                    , span [ class "credits-name" ] [ text "Rob Bethencourt" ]
                     ]
                 ]
+
+
+titleScreen : Html Msg
+titleScreen =
+    div [ class "title-container" ]
+        [ div [ class "title-items-wrapper" ]
+            [ Logo.logo
+            , h2 []
+                [ span [ class "red-orange-text" ] [ text "a " ]
+                , span [ class "blue-purple-text" ] [ text "color " ]
+                , span [ class "yellow-green-text" ] [ text "mixing " ]
+                , span [ class "red-purple-text" ] [ text "game" ]
+                ]
+            , button [ onClick SelectLevel, class "blue" ] [ text "Start Playing" ]
+            , h3 [ class "credits" ]
+                [ span [] [ text "created by" ]
+                , br [] []
+                , span [ class "credits-name" ] [ text "Rob Bethencourt" ]
+                ]
+            ]
+        ]
 
 
 gameHeader : Html Msg
