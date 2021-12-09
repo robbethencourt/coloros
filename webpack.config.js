@@ -22,8 +22,8 @@ var common = {
     plugins: [
         new HTMLWebpackPlugin({
             hash: true,
-            title: "Webpack Example App",
-            metaDesc: 'Webpack Example Description',
+            title: "Coloros",
+            metaDesc: 'color mixing puzzle game',
             template: './src/index.html',
             filename: 'index.html',
             inject: 'body'

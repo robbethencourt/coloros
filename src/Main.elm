@@ -1,8 +1,8 @@
 port module Main exposing (Model, Msg(..), init, main, subscriptions, update, view)
 
-import Artbrush exposing (artbrush)
+import Artbrush
 import Browser
-import Html exposing (Html, br, button, div, h1, h2, h3, header, li, section, span, text, ul)
+import Html exposing (Html, br, button, div, h2, h3, header, li, section, span, text, ul)
 import Html.Attributes exposing (class, disabled)
 import Html.Events exposing (onClick)
 import Json.Encode as Encode
@@ -231,13 +231,13 @@ view model =
             titleScreen
 
         Playing level levelOutcome ->
-            div []
+            div [ class "game-screen-container" ]
                 [ gameHeader
                 , playingView level levelOutcome
                 ]
 
         LevelSelect ->
-            div []
+            div [ class "game-screen-container" ]
                 [ gameHeader
                 , levelSelectView model.highestLevel
                 , div [ class "main-screen-button-wrapper" ]
@@ -248,7 +248,7 @@ view model =
                 ]
 
         Credits ->
-            div []
+            div [ class "game-screen-container" ]
                 [ gameHeader
                 , h2 [ class "credits" ]
                     [ span [] [ text "created by" ]
