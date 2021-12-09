@@ -188,6 +188,11 @@ button {
     background-color: var(--white);
 }
 
+.game-screen-container {
+    max-width: 500px;
+    margin: 0 auto;
+}
+
 .main-screen-button-wrapper {
     display: flex;
     flex-direction: column;

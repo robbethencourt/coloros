@@ -48,7 +48,7 @@
 .colors-swatches ul {
     display: grid;
     gap: 0px;
-    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     padding: 0;
     margin: 0;
     list-style-type: none;
